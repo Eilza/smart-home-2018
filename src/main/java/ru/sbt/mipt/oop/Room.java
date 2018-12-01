@@ -1,5 +1,4 @@
 package ru.sbt.mipt.oop;
-
 import java.util.Collection;
 
 public class Room {
@@ -14,14 +13,20 @@ public class Room {
     }
 
     public Collection<Light> getLights() {
+
         return lights;
     }
 
     public Collection<Door> getDoors() {
+
         return doors;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Light getLightById(String objectId) {
+        return null;
     }
 }
