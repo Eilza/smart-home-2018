@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Application {
+public class Application extends RandomSensorEventProvider {
 
     private static SmartHomeLoader smartHomeLoader = new FileSmartHomeLoader();
     public static void setSmartHomeLoader(SmartHomeLoader smartHomeLoader) {
@@ -13,19 +13,20 @@ public class Application {
 
     public static void main(String... args) throws IOException {
         // начинаем цикл обработки событий
-        SensorEvent event = getNextSensorEvent();
+
+        SensorEvent event = new RandomSensorEventProvider().getNextSensorEvent();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         runEventsCycle(smartHome);
     }
     private static void runEventsCycle(SmartHome smartHome) {
-        SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
+        SensorEvent event = new RandomSensorEventProvider().getNextSensorEvent();
         Collection<EventProcessor> eventProcessors = configureEventProcessors();
         while (event != null) {
             System.out.println("Got event: " + event);
             for (EventProcessor eventProcessor : eventProcessors) {
                 eventProcessor.processEvent(smartHome, event);
             }
-            event = RandomSensorEventProvider.getNextSensorEvent();
+            event = new RandomSensorEventProvider().getNextSensorEvent();
         }
     }
     private static Collection<EventProcessor> configureEventProcessors() {

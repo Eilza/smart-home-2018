@@ -1,32 +1,50 @@
 package ru.sbt.mipt.oop;
 import java.util.Collection;
+import java.util.ArrayList;;
 
-public class Room {
+public class Room implements HomeComposite{
     private Collection<Light> lights;
     private Collection<Door> doors;
+    private Collection<HomeComponent> components;
     private String name;
 
     public Room(Collection<Light> lights, Collection<Door> doors, String name) {
         this.lights = lights;
         this.doors = doors;
+        components = new ArrayList<>();
+        components.addAll(lights);
+        components.addAll(doors);
         this.name = name;
     }
 
-    public Collection<Light> getLights() {
-
-        return lights;
+    @Override
+    public void addChild(HomeComponent component) {
+        components.add(component);
     }
 
-    public Collection<Door> getDoors() {
+    @Override
+    public void remove(HomeComponent component) {
+        components.remove(component);
+    }
 
-        return doors;
+    @Override
+    public Collection<HomeComponent> getChildren() {
+        return components;
+    }
+
+    @Override
+    public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
+        homeGoRoundFunctional.execute(this);
+        if (components == null) {
+            components = new ArrayList<>();
+            components.addAll(doors);
+            components.addAll(lights);
+        }
+        components.forEach((c) -> c.executeHomeGoRoundFunctional(homeGoRoundFunctional));
     }
 
     public String getName() {
-        return name;
-    }
 
-    public Light getLightById(String objectId) {
-        return null;
+        return name;
     }
 }

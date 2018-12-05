@@ -3,7 +3,8 @@ package ru.sbt.mipt.oop;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SmartHome {
+public class SmartHome implements HomeComposite{
+    Collection<HomeComponent> components;
     Collection<Room> rooms;
 
     public SmartHome() {
@@ -16,23 +17,31 @@ public class SmartHome {
         this.rooms = rooms;
     }
 
-    public void addRoom(Room room) {
+    @Override
+    public void addChild(HomeComponent component) {
 
-        rooms.add(room);
+        components.add(component);
     }
 
-    public Collection<Room> getRooms() {
+    @Override
+    public void remove(HomeComponent component) {
 
-        return rooms;
+        components.remove(component);
     }
 
-    public void turnOffLights() {
-        for (Room homeRoom : getRooms()) {
-            for (Light light : homeRoom.getLights()) {
-                light.setOn(false);
-                SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                SensorCommandExecutor.executeCommand(command);
-            }
+    @Override
+    public Collection<HomeComponent> getChildren() {
+
+        return components;
+    }
+
+    @Override
+    public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
+        homeGoRoundFunctional.execute(this);
+        if (components == null) {
+            components = new ArrayList<>();
+            components.addAll(rooms);
         }
+        components.forEach(c -> c.executeHomeGoRoundFunctional(homeGoRoundFunctional));
     }
 }
