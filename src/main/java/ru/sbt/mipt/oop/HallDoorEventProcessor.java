@@ -14,7 +14,7 @@ public class HallDoorEventProcessor implements EventProcessor {
         smartHome.executeHomeGoRoundFunctional(object -> {
             if (object instanceof Room) {
                 Room room = (Room) object;
-                if (room.getName() == "hall") {
+                if (room.getName().equals("hall")) {
                     smartHome.executeHomeGoRoundFunctional(object1 -> {
                         if (object1 instanceof Light) {
                             Light light = (Light) object1;
