@@ -1,16 +1,13 @@
 package ru.sbt.mipt.oop;
 
-public class Light {
+public class Light implements HomeFlap{
     private boolean isOn;
     private final String id;
+    private boolean lock;
 
     public Light(String id, boolean isOn) {
         this.id = id;
         this.isOn = isOn;
-    }
-
-    public boolean isOn() {
-        return isOn;
     }
 
     public String getId() {
@@ -20,4 +17,31 @@ public class Light {
     public void setOn(boolean on) {
         isOn = on;
     }
+
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void changeState(String componentID, boolean state) {
+        if (this.isLock()) {
+            System.out.println("Someone trying to change state of light "+ id +
+                    "\n Sending sms \n");;
+            return;
+        }
+        if (componentID.equals(this.id)) {
+            this.setOn(state);
+            System.out.println("Light " + this.id + (state ? "was turned on" : "was turned off"));
+        }
+    }
+
+    @Override
+    public void lock(boolean lock) {
+        this.lock = lock;
+    }
+
+    @Override
+    public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
+        homeGoRoundFunctional.execute(this);
+    }
+
 }
