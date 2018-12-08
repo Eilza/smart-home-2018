@@ -4,6 +4,7 @@ import ru.sbt.mipt.oop.HomeGoRoundFunctional;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.Door;
+<<<<<<< HEAD
 import ru.sbt.mipt.oop.SensorEvent;
 import ru.sbt.mipt.oop.Light;
 
@@ -13,6 +14,10 @@ public class HallDoorEventProcessor implements EventProcessor {
     public HallDoorEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
     }
+=======
+
+public class HallDoorEventProcessor implements EventProcessor {
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
 
     @Override
     public void processEvent(SensorEvent event) {

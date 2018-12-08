@@ -19,19 +19,24 @@ public class Door implements HomeFlap{
     }
 
     public String getId() {
+
         return id;
     }
 
     public void setOpen(boolean open) {
+
         isOpen = open;
     }
 
     public void changeState(String componentID, boolean state) {
+<<<<<<< HEAD
         if (this.isLock()) {
             System.out.println("Someone trying to change state of door "+ id +
                     "\n Sending sms \n");;
             return;
         }
+=======
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
         if (componentID.equals(this.id)) {
             this.setOpen(state);
             System.out.println( "Door " + this.id + (state ? "was opened" : "was closed"));

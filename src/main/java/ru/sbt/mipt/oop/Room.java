@@ -44,6 +44,10 @@ public class Room implements HomeComposite{
     }
 
     public String getName() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
         return name;
     }
 }

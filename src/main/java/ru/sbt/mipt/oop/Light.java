@@ -18,6 +18,7 @@ public class Light implements HomeFlap{
         isOn = on;
     }
 
+<<<<<<< HEAD
     public boolean isLock() {
         return lock;
     }
@@ -39,6 +40,14 @@ public class Light implements HomeFlap{
         this.lock = lock;
     }
 
+=======
+    public void changeState(String componentID, boolean state) {
+        if (componentID.equals(this.id)) {
+            this.setOn(state);
+            System.out.println("Light " + this.id + (state ? " was turned on" : " was turned off"));
+        }
+    }
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
     @Override
     public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
         homeGoRoundFunctional.execute(this);
