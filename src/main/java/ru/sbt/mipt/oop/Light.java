@@ -1,16 +1,75 @@
 package ru.sbt.mipt.oop;
 
-public class Light {
+public class Light implements HomeFlap{
     private boolean isOn;
     private final String id;
+<<<<<<< HEAD
     public boolean isOn() {
         return isOn;
     }
+=======
+    private boolean lock;
+
+>>>>>>> e35bf48c620e741f61eddf8168fc2a21d6d2a618
     public Light(String id, boolean isOn) {
         this.id = id;
         this.isOn = isOn;
     }
+<<<<<<< HEAD
     public String getId() {
         return id;
     }
+=======
+
+    public String getId() {
+        return id;
+    }
+
+    public void setOn(boolean on) {
+        isOn = on;
+    }
+
+<<<<<<< HEAD
+    public void changeState(String componentID, boolean state) {
+=======
+<<<<<<< HEAD
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void changeState(String componentID, boolean state) {
+        if (this.isLock()) {
+            System.out.println("Someone trying to change state of light "+ id +
+                    "\n Sending sms \n");;
+            return;
+        }
+>>>>>>> 29d1065829dcc247aa42f4fd11191c1c60a6d77d
+        if (componentID.equals(this.id)) {
+            this.setOn(state);
+            System.out.println("Light " + this.id + (state ? "was turned on" : "was turned off"));
+        }
+    }
+
+    @Override
+<<<<<<< HEAD
+=======
+    public void lock(boolean lock) {
+        this.lock = lock;
+    }
+
+=======
+    public void changeState(String componentID, boolean state) {
+        if (componentID.equals(this.id)) {
+            this.setOn(state);
+            System.out.println("Light " + this.id + (state ? " was turned on" : " was turned off"));
+        }
+    }
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
+    @Override
+>>>>>>> 29d1065829dcc247aa42f4fd11191c1c60a6d77d
+    public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
+        homeGoRoundFunctional.execute(this);
+    }
+
+>>>>>>> e35bf48c620e741f61eddf8168fc2a21d6d2a618
 }

@@ -1,6 +1,12 @@
 package ru.sbt.mipt.oop;
 import com.coolcompany.CCSensorEvent;
 import com.coolcompany.EventHandler;
+<<<<<<< HEAD
+=======
+import ru.sbt.mipt.oop.SensorEvent;
+import ru.sbt.mipt.oop.SensorEventType;
+import ru.sbt.mipt.oop.EventProcessor;
+>>>>>>> e35bf48c620e741f61eddf8168fc2a21d6d2a618
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +22,11 @@ public class CCAdapter implements EventHandler {
         eventTypeMap.put("DoorIsLocked", SensorEventType.ALARM_ACTIVATE);
         eventTypeMap.put("DoorIsUnlocked", SensorEventType.ALARM_DEACTIVATE);
     }
+<<<<<<< HEAD
     CCAdapter(EventProcessor eventProcessor) {
+=======
+    public CCAdapter(EventProcessor eventProcessor) {
+>>>>>>> e35bf48c620e741f61eddf8168fc2a21d6d2a618
         this.eventProcessor = eventProcessor;
     }
 
