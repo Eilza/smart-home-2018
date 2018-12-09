@@ -4,9 +4,13 @@ import ru.sbt.mipt.oop.SmartHome;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+<<<<<<< HEAD
 import org.springframework.stereotype.Component;
 
 @Component
+=======
+
+>>>>>>> 29d1065829dcc247aa42f4fd11191c1c60a6d77d
 public class FileSmartHomeLoader implements SmartHomeLoader {
     @Override
     public SmartHome load() throws IOException {

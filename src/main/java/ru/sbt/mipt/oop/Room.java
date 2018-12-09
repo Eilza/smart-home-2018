@@ -47,7 +47,11 @@ public class Room implements HomeComposite{
     @Override
     public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
         homeGoRoundFunctional.execute(this);
+<<<<<<< HEAD
         if (components == null || components.isEmpty()) {
+=======
+        if (components == null) {
+>>>>>>> 29d1065829dcc247aa42f4fd11191c1c60a6d77d
             components = new ArrayList<>();
             components.addAll(doors);
             components.addAll(lights);
@@ -56,6 +60,13 @@ public class Room implements HomeComposite{
     }
 
     public String getName() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d9b98930b40e65a28cefb07a5066cc77ad5ac40
+>>>>>>> 29d1065829dcc247aa42f4fd11191c1c60a6d77d
         return name;
     }
 }
