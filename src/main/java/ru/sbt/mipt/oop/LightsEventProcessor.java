@@ -3,20 +3,26 @@ import static ru.sbt.mipt.oop.SensorEventType.LIGHT_ON;
 import static ru.sbt.mipt.oop.SensorEventType.LIGHT_OFF;
 
 public class LightsEventProcessor implements EventProcessor {
-    public void processEvent(SmartHome smartHome, SensorEvent event) {
-        if (!isLightEvent(event)) return;
-        for (Room room : smartHome.getRooms()) {
-            Light light = room.getLightById(event.getObjectId());
-            if (event.getType() == LIGHT_ON) {
-                light.setOn(true);
-                System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
-            } else {
-                light.setOn(false);
-                System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
-            }
-        }
+    private final SmartHomeSource smartHome;
+
+    public LightsEventProcessor(SmartHomeSource smartHome) {
+        this.smartHome = smartHome;
     }
+
+    @Override
+    public void processEvent(SensorEvent event) {
+        if (!isLightEvent(event)) return;
+        smartHome.executeHomeGoRoundFunctional(object -> {
+            if (object instanceof  LightComponent) {
+                LightComponent light = (LightComponent) object;
+                boolean state = event.getType().equals(LIGHT_ON);
+                light.changeState(event.getObjectId(), state);
+            }
+        });
+    }
+
     private boolean isLightEvent(SensorEvent event) {
-        return event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF;
+        if (event == null) return false;
+        return event.getType().equals(LIGHT_ON) || event.getType().equals(LIGHT_OFF);
     }
 }

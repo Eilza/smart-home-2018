@@ -1,21 +1,26 @@
 package ru.sbt.mipt.oop;
-import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
 
 public class HallDoorEventProcessor implements EventProcessor {
+    private final SmartHomeSource smartHome;
+
+    public HallDoorEventProcessor(SmartHomeSource smartHome) {
+        this.smartHome = smartHome;
+    }
+
     @Override
-    public void processEvent(SmartHome smartHome, SensorEvent event) {
-        if (event.getType() != DOOR_CLOSED) return;
+    public void processEvent(SensorEvent event) {
+        if (!event.getType().equals(SensorEventType.DOOR_CLOSED)) {
+            return;
+        }
         // событие от двери
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
-                if (door.getId().equals(event.getObjectId())) {
-                    // если мы получили событие о закрытие двери в холле - это значит, что была закрыта входная дверь.
-                    // в этом случае мы хотим автоматически выключить свет во всем доме (это же умный дом!)
-                    if (room.getName().equals("hall")) {
-                        smartHome.turnOffLights();
-                    }
+        smartHome.executeHomeGoRoundFunctional(object -> {
+            if (object instanceof RoomComponent) {
+                RoomComponent room = (RoomComponent) object;
+                if (room.getName().equals("hall")) {
+                    new AllLightOffButton(smartHome).execute();
+                    System.out.println("Hall door was closed. All light is off");
                 }
             }
-        }
+        });
     }
 }
