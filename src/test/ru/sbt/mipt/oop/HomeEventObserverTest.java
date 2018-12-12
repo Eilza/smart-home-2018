@@ -1,6 +1,4 @@
 package ru.sbt.mipt.oop;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +21,7 @@ class HomeEventObserverTest {
         observer.addEventProcessor(processor);
         observer.runEventLoop();
         Mockito.verify(eventProvider, Mockito.times(2)).getNextSensorEvent();
-        Mockito.verify(processor).onEvent(event);
+        Mockito.verify(processor).processEvent(event);
 
     }
 }

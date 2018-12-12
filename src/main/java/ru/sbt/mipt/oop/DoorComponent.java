@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-public class DoorComponent implements HomeFlap {
+public class DoorComponent implements HomeComponent {
     private final String id;
     private boolean isOpen;
     private final String OPENED = " was opened.";

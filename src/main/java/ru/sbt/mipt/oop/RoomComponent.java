@@ -2,7 +2,7 @@ package ru.sbt.mipt.oop;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RoomComponent implements HomeComposite {
+public class RoomComponent implements HomeComponent {
     private Collection<HomeComponent> components;
     private String name;
 

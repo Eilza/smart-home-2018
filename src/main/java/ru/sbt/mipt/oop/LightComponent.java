@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-public class LightComponent implements HomeFlap {
+public class LightComponent implements HomeComponent {
     private boolean isOn;
     private final String id;
     final String TURNED_ON = " was turned on.";
