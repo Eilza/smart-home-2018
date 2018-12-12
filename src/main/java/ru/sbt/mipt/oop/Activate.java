@@ -33,11 +33,7 @@ public class Activate implements AlertState{
 
     @Override
     public void setToAlert() {
-<<<<<<< HEAD
         System.out.println("Invasion occurred");
-=======
-        System.out.println("Unacceptable behaviour!");
->>>>>>> e35bf48c620e741f61eddf8168fc2a21d6d2a618
         changeState(new Alert(signaling));
     }
 }
