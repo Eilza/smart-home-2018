@@ -9,7 +9,7 @@ public class DoorEventProcessorTest {
     public static SensorEvent otherEvent;
     public static SensorEvent doorOpenEvent;
     @Mock
-    public static SmartHomeSource homeMock;// = Mockito.mock(SmartHome.class);
+    public static SmartHome homeMock;// = Mockito.mock(SmartHome.class);
     @BeforeAll
     public static void init() {
         doorOpenEvent = Mockito.mock(SensorEvent.class);
@@ -20,14 +20,14 @@ public class DoorEventProcessorTest {
         Mockito.when(otherEvent.getType()).thenReturn(SensorEventType.LIGHT_ON);
     }
     @Test
-    public void executeActionOnSmartHomeWithDoorOpenEventTest() {
+    public void executeHomeGoRoundFunctionalOnSmartHomeWithDoorOpenEventTest() {
         EventProcessor processor = new DoorEventProcessor(homeMock);
         processor.processEvent(doorOpenEvent);
         Mockito.verify(homeMock).executeHomeGoRoundFunctional(Mockito.any());
         Mockito.verifyNoMoreInteractions(homeMock);
     }
     @Test
-    public void executeActionOnSmartHomeWithDoorClosedEventTest() {
+    public void executeHomeGoRoundFunctionalOnSmartHomeWithDoorClosedEventTest() {
         EventProcessor processor = new DoorEventProcessor(homeMock);
         processor.processEvent(doorClosedEvent);
         Mockito.verify(homeMock).executeHomeGoRoundFunctional(Mockito.any());

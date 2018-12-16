@@ -2,9 +2,9 @@ package ru.sbt.mipt.oop;
 
 public class SMSSenderDecorator implements EventProcessor {
     private final EventProcessor processor;
-    private final SmartHomeSource smartHome;
+    private final SmartHome smartHome;
 
-    public SMSSenderDecorator(EventProcessor processor, SmartHomeSource smartHome) {
+    public SMSSenderDecorator(EventProcessor processor, SmartHome smartHome) {
         this.processor = processor;
         this.smartHome = smartHome;
     }

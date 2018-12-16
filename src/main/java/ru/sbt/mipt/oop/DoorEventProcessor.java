@@ -3,9 +3,9 @@ import static ru.sbt.mipt.oop.SensorEventType.DOOR_OPEN;
 import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
 
 public class DoorEventProcessor implements EventProcessor {
-    private final SmartHomeSource smartHome;
+    private final SmartHome smartHome;
 
-    public DoorEventProcessor(SmartHomeSource smartHome) {
+    public DoorEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
     }
 
@@ -14,8 +14,8 @@ public class DoorEventProcessor implements EventProcessor {
         if (!isDoorEvent(event)) return;
         // событие от двери
         smartHome.executeHomeGoRoundFunctional(object -> {
-            if (object instanceof DoorComponent) {
-                DoorComponent door = (DoorComponent) object;
+            if (object instanceof Door) {
+                Door door = (Door) object;
                 boolean state = event.getType().equals(DOOR_OPEN);
                 door.changeState(event.getObjectId(), state);
             }

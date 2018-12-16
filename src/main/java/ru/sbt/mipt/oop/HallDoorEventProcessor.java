@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop;
 
 public class HallDoorEventProcessor implements EventProcessor {
-    private final SmartHomeSource smartHome;
+    private final SmartHome smartHome;
 
-    public HallDoorEventProcessor(SmartHomeSource smartHome) {
+    public HallDoorEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
     }
 
@@ -14,8 +14,8 @@ public class HallDoorEventProcessor implements EventProcessor {
         }
         // событие от двери
         smartHome.executeHomeGoRoundFunctional(object -> {
-            if (object instanceof RoomComponent) {
-                RoomComponent room = (RoomComponent) object;
+            if (object instanceof Room) {
+                Room room = (Room) object;
                 if (room.getName().equals("hall")) {
                     new AllLightOffButton(smartHome).execute();
                     System.out.println("Hall door was closed. All light is off");

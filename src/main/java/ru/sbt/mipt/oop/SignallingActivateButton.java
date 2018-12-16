@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop;
 
 public class SignallingActivateButton implements RemoteButtons{
-    private final SmartHomeSource smartHome;
+    private final SmartHome smartHome;
 
-    public SignallingActivateButton(SmartHomeSource smartHome) {
+    public SignallingActivateButton(SmartHome smartHome) {
         this.smartHome = smartHome;
     }
     @Override

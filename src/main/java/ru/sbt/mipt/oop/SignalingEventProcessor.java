@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop;
 
 public class SignalingEventProcessor implements EventProcessor {
-    private final SmartHomeSource smartHome;
+    private final SmartHome smartHome;
 
-    public SignalingEventProcessor(SmartHomeSource smartHome) {
+    public SignalingEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
     }
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class FileLoaderAdapterTest {
     @Test
-    public void toSmartHomeSourceTest() {
+    public void toSmartHomeTest() {
         SmartHomeLoader loader = new FileLoaderAdapter();
         SmartHomeInterface home = null;
         try {
@@ -15,7 +15,7 @@ public class FileLoaderAdapterTest {
             e.printStackTrace();
         }
         Assertions.assertNotNull(home);
-        SmartHomeSource smartHome = home.toSmartHomeSource();
-        Assertions.assertEquals(4, smartHome.getComponents().size());
+        SmartHome smartHome = home.toSmartHome();
+        Assertions.assertEquals(4, smartHome.getRooms().size());
     }
 }

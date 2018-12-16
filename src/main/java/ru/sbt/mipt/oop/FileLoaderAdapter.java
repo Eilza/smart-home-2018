@@ -6,6 +6,6 @@ public class FileLoaderAdapter implements SmartHomeLoader {
     public SmartHomeInterface load() throws IOException {
         FileSmartHomeLoader loader = new FileSmartHomeLoader();
         SmartHome home = loader.load();
-        return home.toSmartHomeSource();
+        return home.toSmartHome();
     }
 }
