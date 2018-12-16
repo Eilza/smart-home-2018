@@ -84,12 +84,12 @@ public class SmartHome implements SmartHomeInterface, HomeComponent {
         //if (components != null) components.forEach(c -> c.executeHomeGoRoundFunctional(homeGoRoundFunctional));
     }
 
-    public void activateSignaling(String code) {
-        this.signaling.activate(code);
+    public void activateSignaling(String pass) {
+        this.signaling.activate(pass);
     }
 
-    public void deactivateSignaling(String code) {
-        this.signaling.deactivate(code);
+    public void deactivateSignaling(String pass) {
+        this.signaling.deactivate(pass);
     }
 
     @Override
