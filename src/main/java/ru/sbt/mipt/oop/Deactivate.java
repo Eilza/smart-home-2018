@@ -28,3 +28,4 @@ public class Deactivate implements AlertState {
         changeState(new Alert(signaling));
     }
 }
+

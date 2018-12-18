@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-public class Door implements HomeComponent {
+public class Door implements Actionable {
     private final String id;
     private boolean isOpen;
     private final String OPENED = " was opened.";
@@ -23,15 +23,13 @@ public class Door implements HomeComponent {
         return isOpen;
     }
 
-    public void changeState(String componentID, boolean state) {
-        if (componentID.equals(this.id)) {
-            this.setOpen(state);
-            System.out.println( "DoorComponent " + this.id + (state ? OPENED : CLOSED));
-        }
+    public void changeState(boolean state) {
+        isOpen = state;
+        System.out.println( "Door " + this.id + (state ? OPENED : CLOSED));
     }
 
     @Override
-    public void executeHomeGoRoundFunctional(HomeGoRoundFunctional homeGoRoundFunctional) {
-        homeGoRoundFunctional.execute(this);
+    public void executeHomeGoRoundFunctional(Action action) {
+        action.execute(this);
     }
 }

@@ -16,7 +16,7 @@ public class HallLightOffButton implements RemoteButtons{
                     room.executeHomeGoRoundFunctional(object1 -> {
                         if (object1 instanceof Light) {
                             Light light = (Light) object1;
-                            light.changeState(light.getId(), true);
+                            // Исправить  light.changeState(light.getId(), true);
                         }
                     });
                 }

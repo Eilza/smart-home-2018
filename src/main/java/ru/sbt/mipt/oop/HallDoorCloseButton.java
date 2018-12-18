@@ -16,7 +16,7 @@ public class HallDoorCloseButton implements RemoteButtons{
                     room.executeHomeGoRoundFunctional(object1 -> {
                         if (object1 instanceof Door) {
                             Door door = (Door) object1;
-                            door.changeState(door.getId(), false);
+                            door.changeState(false);
                         }
                     });
                 }

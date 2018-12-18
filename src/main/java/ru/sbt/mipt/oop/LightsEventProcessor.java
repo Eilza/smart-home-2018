@@ -11,18 +11,26 @@ public class LightsEventProcessor implements EventProcessor {
 
     @Override
     public void processEvent(SensorEvent event) {
+
+
         if (!isLightEvent(event)) return;
+
         smartHome.executeHomeGoRoundFunctional(object -> {
-            if (object instanceof  Light) {
+
+            if (object instanceof Light) {
+
                 Light light = (Light) object;
-                boolean state = event.getType().equals(LIGHT_ON);
-                light.changeState(event.getObjectId(), state);
+                event.toString();
+                if (light.getId().equals(event.getObjectId())) {
+                    boolean state = event.getType().equals(LIGHT_ON);
+                    light.changeState(state);
+                }
             }
         });
     }
 
     private boolean isLightEvent(SensorEvent event) {
-        if (event == null) return false;
-        return event.getType().equals(LIGHT_ON) || event.getType().equals(LIGHT_OFF);
+        return (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF);
     }
 }
+

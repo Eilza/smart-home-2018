@@ -11,21 +11,21 @@ public class DoorEventProcessor implements EventProcessor {
 
     @Override
     public void processEvent(SensorEvent event) {
-        if (!isDoorEvent(event)) return;
         // событие от двери
+        if (!isDoorEvent(event)) return;
+
         smartHome.executeHomeGoRoundFunctional(object -> {
             if (object instanceof Door) {
                 Door door = (Door) object;
-                boolean state = event.getType().equals(DOOR_OPEN);
-                door.changeState(event.getObjectId(), state);
+                if (door.getId().equals(event.getObjectId())) {
+                    boolean state = event.getType().equals(DOOR_OPEN);
+                    door.changeState(state);
+                }
             }
         });
     }
 
     private boolean isDoorEvent(SensorEvent event) {
-        if (event == null) {
-            return false;
-        }
-        return event.getType().equals(DOOR_CLOSED) || event.getType().equals(DOOR_OPEN);
+        return (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED);
     }
 }

@@ -1,41 +1,54 @@
 package ru.sbt.mipt.oop;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import java.io.IOException;
+import static org.junit.Assert.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
 public class HallDoorEventProcessorTest {
-    @Mock
-    private SensorEvent doorEvent;
 
-    @Mock
-    private SensorEvent otherEvent;
+    private static SmartHomeLoader smartHomeLoader = new FileSmartHomeLoader();
 
-    @Mock
-    private SmartHome homeMock;
-    @InjectMocks
-    private HallDoorEventProcessor processor;
 
     @Test
-    void executeHomeGoRoundFunctionalWithCloseDoorEventTest () {
-        Mockito.when(doorEvent.getType()).thenReturn(SensorEventType.DOOR_CLOSED);
-        processor.processEvent(doorEvent);
-        Mockito.verify(homeMock).executeHomeGoRoundFunctional(Mockito.any());
-    }
-    @Test
-    void executeHomeGoRoundFunctionalWithOpenDoorEventTest () {
-        Mockito.when(doorEvent.getType()).thenReturn(SensorEventType.DOOR_OPEN);
-        processor.processEvent(doorEvent);
-        Mockito.verifyNoMoreInteractions(homeMock);
-    }
-    @Test
-    void executeHomeGoRoundFunctionalWithOtherEventTest () {
-        Mockito.when(doorEvent.getType()).thenReturn(SensorEventType.LIGHT_ON);
-        processor.processEvent(doorEvent);
-        Mockito.verifyNoMoreInteractions(homeMock);
+    public void testHallDoorProcessEvent() throws IOException {
+
+
+        SmartHome smartHome = smartHomeLoader.load().toSmartHome(); // загружаем умный дом
+
+        String doorId = hallDoorId(smartHome).getId();
+
+        System.out.println("Hall door id is: " + doorId );
+
+        SensorEvent event1 = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
+
+
+        new HallDoorEventProcessor(smartHome).processEvent(event1);
+
+
+        assertEquals( 0, numberOfOnLigths( smartHome ) );
+
+
     }
 
+    public static Door hallDoorId(SmartHome smartHome) {
+        for (Room room : smartHome.getRooms()) {
+            if (room.getName().equals("hall")) {
+                return room.getDoors().iterator().next();
+            }
+        }
+        return null;
+    }
+
+
+    public int numberOfOnLigths(SmartHome smartHome){
+        int counLightsIsOn = 0;
+
+        for (Room homeRoom : smartHome.getRooms()) {
+            for (Light light : homeRoom.getLights()) {
+                if(light.isOn()){
+                    counLightsIsOn ++;
+                }
+            }
+        }
+      return counLightsIsOn;
+    }
 }

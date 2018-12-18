@@ -3,56 +3,88 @@ import org.junit.jupiter.api.Test;
 import org.junit.Assert;
 
 public class SignalingTest {
-    private static Signaling signaling= new Signaling();
+    Signaling signaling;
+
     @Test
-    public void activateFromDisabledTest() {
-        signaling.activate( "145236");
+    public void activateFromDeactivateState() {
+        signaling = new Signaling();
+
+        signaling.activate("4444");
         Assert.assertTrue(signaling.getState() instanceof Activate);
+
+        signaling.changeState(new Deactivate(signaling));
+        signaling.activate("12");
+        Assert.assertTrue(signaling.getState() instanceof Alert);
+
     }
+
     @Test
-    public void activateFromActivatedTest() {
-        signaling.activate( "145236");
+    public void activateFromActiveStateTest() {
+        signaling = new Signaling();
+        signaling.activate("4444");
         Assert.assertTrue(signaling.getState() instanceof Activate);
-        signaling.activate( "31");
+        signaling.activate("31");
         Assert.assertTrue(signaling.getState() instanceof Alert);
         Assert.assertTrue(!signaling.checkPassword("31"));
     }
+
     @Test
-    public void activateFromAlarmTest() {
-        signaling.activate( "145236");
-        Assert.assertTrue(signaling.getState() instanceof Activate);
-        signaling.activate( "31");
+    public void activateFromAlertStateTest() {
+        signaling = new Signaling();
+        signaling.changeState(new Alert(signaling));
+
+        signaling.activate("4444");
         Assert.assertTrue(signaling.getState() instanceof Alert);
-        signaling.activate( "1");
+        signaling.activate("31");
+        Assert.assertTrue(signaling.getState() instanceof Alert);
+        signaling.activate("1");
         Assert.assertTrue(signaling.getState() instanceof Alert);
         Assert.assertTrue(!signaling.checkPassword("1"));
+
     }
+
     @Test
-    public void deactivateFromActivatedWithRightPassTest() {
-        signaling.activate( "145236");
-        signaling.deactivate( "145236");
+    public void deactivateFromActiveStateTest() {
+        signaling = new Signaling();
+        signaling.activate("4444");
+        signaling.deactivate("4444");
+
         Assert.assertTrue(signaling.getState() instanceof Deactivate);
         Assert.assertTrue(signaling.checkPassword("4444"));
-    }
-    @Test
-    public void deactivateFromActivatedWithWrongPasseTest() {
-        signaling.activate( "145236");
-        signaling.deactivate( "31");
+
+        signaling.activate("4444");
+        signaling.deactivate("12");
         Assert.assertTrue(signaling.getState() instanceof Alert);
+        Assert.assertTrue(!signaling.checkPassword("12"));
+
     }
+
     @Test
-    public void deactivateFromDeactivatedTest() {
-        signaling.deactivate( "31");
+    public void deactivateFromDeactiveStateTest() {
+        signaling = new Signaling();
+
+        signaling.deactivate("4444");
         Assert.assertTrue(signaling.getState() instanceof Deactivate);
-        Assert.assertTrue(signaling.checkPassword("4444"));
+
+        signaling.deactivate("31");
+        Assert.assertTrue(signaling.getState() instanceof Deactivate);
+        Assert.assertTrue(!signaling.checkPassword("31"));
     }
+
     @Test
-    public void deactivateFromAlarmTest() {
-        signaling.activate( "145236");
-        signaling.deactivate( "31");
+    public void deactivateFromAlertStateTest() {
+        signaling = new Signaling();
+
+        signaling.activate("4444");
+        signaling.deactivate("31");
         Assert.assertTrue(signaling.getState() instanceof Alert);
-        signaling.deactivate( "145236");
+
+        signaling.deactivate("03");
+        Assert.assertTrue(signaling.getState() instanceof Alert);
+
+        signaling.deactivate("4444");
+
         Assert.assertTrue(signaling.getState() instanceof Deactivate);
-        Assert.assertTrue(signaling.checkPassword("4444"));
+        Assert.assertTrue(!signaling.checkPassword("03"));
     }
 }

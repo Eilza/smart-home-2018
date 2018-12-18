@@ -1,42 +1,54 @@
 package ru.sbt.mipt.oop;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import java.io.IOException;
+import static org.junit.Assert.assertTrue;
 
 public class DoorEventProcessorTest {
-    public static SensorEvent doorClosedEvent;
-    public static SensorEvent otherEvent;
-    public static SensorEvent doorOpenEvent;
-    @Mock
-    public static SmartHome homeMock;// = Mockito.mock(SmartHome.class);
-    @BeforeAll
-    public static void init() {
-        doorOpenEvent = Mockito.mock(SensorEvent.class);
-        Mockito.when(doorOpenEvent.getType()).thenReturn(SensorEventType.DOOR_OPEN);
-        doorClosedEvent = Mockito.mock(SensorEvent.class);
-        Mockito.when(doorClosedEvent.getType()).thenReturn(SensorEventType.DOOR_CLOSED);
-        otherEvent = Mockito.mock(SensorEvent.class);
-        Mockito.when(otherEvent.getType()).thenReturn(SensorEventType.LIGHT_ON);
-    }
+
+    private static SmartHomeLoader smartHomeLoader = new FileSmartHomeLoader();
+
+
     @Test
-    public void executeHomeGoRoundFunctionalOnSmartHomeWithDoorOpenEventTest() {
-        EventProcessor processor = new DoorEventProcessor(homeMock);
-        processor.processEvent(doorOpenEvent);
-        Mockito.verify(homeMock).executeHomeGoRoundFunctional(Mockito.any());
-        Mockito.verifyNoMoreInteractions(homeMock);
+    public void testDoorProcessEvent() throws IOException {
+
+
+
+        SmartHome smartHome = smartHomeLoader.load().toSmartHome(); // загружаем умный дом
+
+
+        String doorId1 = "2";
+
+        SensorEvent event1 = new SensorEvent(SensorEventType.DOOR_OPEN, doorId1);
+
+        SensorEvent event2 = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId1);
+
+
+
+        if (getDoorById(smartHome, doorId1).isOpen()) {  // если дверь открыта, то закроем ее и проверим закралась ли
+
+            new DoorEventProcessor(smartHome).processEvent(event2);
+
+            assertTrue(!getDoorById(smartHome, doorId1).isOpen());
+
+        } else {                    // если дверь закрыта, то откроем ее и посмотрим открылась ли
+            new DoorEventProcessor(smartHome).processEvent(event1);
+
+            assertTrue(getDoorById(smartHome, doorId1).isOpen());
+        }
+
     }
-    @Test
-    public void executeHomeGoRoundFunctionalOnSmartHomeWithDoorClosedEventTest() {
-        EventProcessor processor = new DoorEventProcessor(homeMock);
-        processor.processEvent(doorClosedEvent);
-        Mockito.verify(homeMock).executeHomeGoRoundFunctional(Mockito.any());
-        Mockito.verifyNoMoreInteractions(homeMock);
-    }
-    @Test
-    public void executeActionOnSmartHomeWithOtherEventTest() {
-        EventProcessor processor = new DoorEventProcessor(homeMock);
-        processor.processEvent(otherEvent);
-        Mockito.verifyNoMoreInteractions(homeMock);
+
+
+
+    public static Door getDoorById(SmartHome smartHome, String Id) {
+        for (Room room : smartHome.getRooms()) {
+            for (Door door : room.getDoors()) {
+                if (door.getId().equals(Id)) {
+                    return door;
+                }
+            }
+        }
+        return null;
+
     }
 }

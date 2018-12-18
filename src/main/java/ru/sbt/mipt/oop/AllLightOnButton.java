@@ -12,7 +12,7 @@ public class AllLightOnButton implements RemoteButtons {
         smartHome.executeHomeGoRoundFunctional(object -> {
             if (object instanceof Light) {
                 Light light = (Light) object;
-                light.changeState(light.getId(), true);
+                //Исправить  light.changeState(light.getId(), true);
             }
         });
     }
